@@ -5,7 +5,7 @@ class Preprocess():
     """ Accepts a list of lists and outputs a matrix """
     @classmethod
     def to_matrix(self, data):
-        arrays = [np.array(d) for d in data[0:300]]
+        arrays = [np.array(d) for d in data]
         return np.matrix(arrays)
 
     @classmethod
