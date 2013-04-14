@@ -1,5 +1,6 @@
 import sys
 sys.path.append("/home/ubuntu/scikit-learn")
+from sklearn import svm
 from sklearn.linear_model import LogisticRegression
 from sklearn.linear_model import LinearRegression
 from sklearn.linear_model import Lasso
@@ -8,7 +9,6 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.ensemble import ExtraTreesClassifier
 from sklearn.neighbors import KNeighborsRegressor
 from sklearn.ensemble import GradientBoostingRegressor
-#from sklearn.ensemble import GradientBoostingClassifer
 #from sklearn.naive_bayes import GaussianNB
 #from sklearn.naive_bayes import BernoulliNB
 #from sklearn.naive_bayes import MultinomialNB
@@ -29,9 +29,9 @@ class Classifier():
         models = []
         #models.append(LinearRegression())
         models.append(LogisticRegression(C=10, penalty='l2', tol=1.0))
+        models.append(svm.SVR(tol=0.001))
         #models.append(ExtraTreesClassifier(n_estimators=10))
-        #models.append(GradientBoostingRegressor())
-        #models.append(GradientBoostingClassifier(n_estimators=10))
+        models.append(GradientBoostingRegressor())
         #models.append(KNeighborsRegressor(n_neighbors=20))
         #models.append(GaussianNB())
         #models.append(RandomForestClassifier(n_estimators=30))
@@ -39,16 +39,16 @@ class Classifier():
         
         all_preds = []
         #confidences = [0.42, 0.50, 0.08]
-        confidences = [1.0, 1.0]
+        confidences = [1.0, 1.0, 1.0]
         ####
         for i, model in enumerate(models):
             if hasattr(model, 'fit'):
                 model.fit(train, targets)
-            if hasattr(model, 'predict_proba'):
+            if hasattr(model, 'predict_proba') and type(model) != svm.SVR:
+                #preds = [model.predict(d)[0] for d in cv]
                 preds = [model.predict_proba(d)[0][1] for d in cv]
             elif hasattr(model, 'predict'):
-                #preds = [model.predict(d)[0] for d in cv]
-                preds = [model.predict(d) for d in cv]
+                preds = [model.predict(d)[0] for d in cv]
         #    else:
         #        preds = [model.activate(d)[0] for d in test_data]
         #
