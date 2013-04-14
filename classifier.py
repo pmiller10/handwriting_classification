@@ -29,9 +29,9 @@ class Classifier():
         models = []
         #models.append(LinearRegression())
         models.append(LogisticRegression(C=10, penalty='l2', tol=1.0))
-        models.append(svm.SVR(tol=0.001))
+        #models.append(svm.SVR(tol=0.001))
         #models.append(ExtraTreesClassifier(n_estimators=10))
-        models.append(GradientBoostingRegressor())
+        #models.append(GradientBoostingRegressor())
         #models.append(KNeighborsRegressor(n_neighbors=20))
         #models.append(GaussianNB())
         #models.append(RandomForestClassifier(n_estimators=30))
@@ -39,7 +39,7 @@ class Classifier():
         
         all_preds = []
         #confidences = [0.42, 0.50, 0.08]
-        confidences = [1.0, 1.0, 1.0]
+        confidences = [1.0, 1.0, 1.0, 1.0, 1.0]
         ####
         for i, model in enumerate(models):
             if hasattr(model, 'fit'):

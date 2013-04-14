@@ -2,7 +2,7 @@ class PostProcess():
 
     @classmethod
     def submission(self, ids, preds):
-        name = 'submission1.csv'
+        name = 'submission2.csv'
         f = open(name, 'w')
         string = ''
         ids = ids[0::4]

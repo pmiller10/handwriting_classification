@@ -11,7 +11,7 @@ print matrix.shape
 matrix = Preprocess.remove_constants(matrix)
 print matrix.shape
 matrix = Preprocess.scale(matrix)
-matrix = Preprocess.polynomial(matrix, 3)
+matrix = Preprocess.polynomial(matrix, 2)
 matrix = Preprocess.scale(matrix)
 print matrix.shape
 matrix = matrix.tolist()
