@@ -16,3 +16,4 @@ train, cv = matrix[:half], matrix[half:]
 train_genders, cv_genders = genders[:half], genders[half:]
 preds = Classifier.ensemble_preds(train, train_genders, cv)
 print "Score: ", log_loss(preds, cv_genders)
+
