@@ -2,6 +2,7 @@ from image import Image
 from preprocess import Preprocess
 from classifier import Classifier
 from log_loss import log_loss
+from postprocess import PostProcess
 
 genders = Image.genders()
 d = Image.data()
@@ -20,3 +21,5 @@ train_genders, cv_genders = genders[:half], genders[half:]
 preds = Classifier.ensemble_preds(train, train_genders, cv)
 print "Score: ", log_loss(preds, cv_genders)
 
+# for creating submission file
+PostProcess(ids, preds)
