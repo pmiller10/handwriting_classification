@@ -1,6 +1,5 @@
 from image import Image
 from preprocess import Preprocess
-#import numpy as np
 from classifier import Classifier
 from log_loss import log_loss
 
@@ -9,6 +8,10 @@ d = Image.data()
 matrix = Preprocess.to_matrix(d)
 print matrix.shape
 matrix = Preprocess.remove_constants(matrix)
+print matrix.shape
+matrix = Preprocess.scale(matrix)
+matrix = Preprocess.polynomial(matrix, 5)
+matrix = Preprocess.scale(matrix)
 print matrix.shape
 matrix = matrix.tolist()
 half = len(matrix)/2

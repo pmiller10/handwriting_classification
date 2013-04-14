@@ -1,4 +1,9 @@
+import copy
 import numpy as np
+import sys
+sys.path.append("/home/ubuntu/scikit-learn")
+from sklearn.preprocessing import StandardScaler
+from sklearn.decomposition import PCA
 
 class Preprocess():
 
@@ -20,5 +25,28 @@ class Preprocess():
         std = std.tolist()[0]
         nonzero_std_indices = [i for i,d in enumerate(std) if d != 0]
         return matrix[:,(nonzero_std_indices)]
+
+    @classmethod
+    def polynomial(self, matrix, polynomial):
+        out = copy.copy(matrix)
+        for i in range(polynomial+1)[2:]:
+            print i
+            raised = np.power(matrix, i)
+            out = np.concatenate((out, raised), axis=1)
+        return out
+
+    @classmethod
+    def scale(self, matrix):
+        scaler = StandardScaler()
+        scaler.fit(matrix)
+        matrix = scaler.transform(matrix)
+        return matrix
+
+    @classmethod
+    def pca(self, matrix, n_components):
+        pca = PCA(n_components=n_components)
+        pca.fit(matrix)
+        return pca.transform(matrix)
+        
 
 #print Preprocess.remove_zero_indices()
