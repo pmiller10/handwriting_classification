@@ -29,9 +29,9 @@ class Classifier():
         models = []
         #models.append(LinearRegression())
         models.append(LogisticRegression(C=10, penalty='l2', tol=1.0))
-        models.append(svm.SVR(tol=0.001))
+        #models.append(svm.SVR(tol=0.001))
         #models.append(ExtraTreesClassifier(n_estimators=10))
-        models.append(GradientBoostingRegressor())
+        #models.append(GradientBoostingRegressor())
         #models.append(KNeighborsRegressor(n_neighbors=20))
         #models.append(GaussianNB())
         #models.append(RandomForestClassifier(n_estimators=30))
@@ -64,4 +64,18 @@ class Classifier():
             merged = merged + p
         merged = merged/len(all_preds)
         print merged[0:5]
-        return merged
+        return self.vote(merged)
+
+    @classmethod
+    def vote(self, preds):
+        ids_count = len(preds)/4 # count of unique ids
+        ids = range(ids_count) # list with one element per author
+        ids = array(ids)
+        author_indexes = ids * 4
+        scores = []
+        print preds[0:12]
+        for i in author_indexes:
+            a,b,c,d = preds[i], preds[i+1], preds[i+2], preds[i+3] 
+            scores.append((a + b + c + d)/4.)
+        print scores[0:12]
+        return scores
