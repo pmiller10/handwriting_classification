@@ -2,8 +2,9 @@ import copy
 import numpy as np
 import sys
 sys.path.append("/home/ubuntu/scikit-learn")
-from sklearn.preprocessing import StandardScaler
+from sklearn.preprocessing import StandardScaler, MinMaxScaler
 from sklearn.decomposition import PCA
+from sklearn.kernel_approximation import RBFSampler
 
 class Preprocess():
 
@@ -30,7 +31,7 @@ class Preprocess():
     def polynomial(self, matrix, polynomial):
         out = copy.copy(matrix)
         for i in range(polynomial+1)[2:]:
-            print i
+            print "...raising to power of ", i
             raised = np.power(matrix, i)
             out = np.concatenate((out, raised), axis=1)
         return out
@@ -47,6 +48,16 @@ class Preprocess():
         pca = PCA(n_components=n_components)
         pca.fit(matrix)
         return pca.transform(matrix)
-        
 
-#print Preprocess.remove_zero_indices()
+    @classmethod
+    def rbf_kernel(self, matrix, n_components):
+        rbf = RBFSampler(n_components = n_components)
+        print rbf
+        matrix_features = rbf.fit_transform(matrix)
+        return matrix_features 
+        
+    @classmethod
+    def norm(self, matrix):
+        min_max_scaler = MinMaxScaler()
+        matrix = min_max_scaler.fit_transform(matrix)
+        return matrix
